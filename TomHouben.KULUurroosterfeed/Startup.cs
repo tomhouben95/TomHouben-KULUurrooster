@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using TomHouben.AspNetCore.MongoDb;
 using TomHouben.KULUurroosterfeed.ICalService;
 using TomHouben.KULUurroosterfeed.HTMLParserServices;
+using TomHouben.KULUurroosterfeed.Repositories;
+using TomHouben.KULUurroosterfeed.Services;
+using TomHouben.KULUurroosterfeed.Services.Abstractions;
 
 namespace TomHouben.KULUurroosterfeed
 {
@@ -25,8 +28,13 @@ namespace TomHouben.KULUurroosterfeed
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMongoConnection(Configuration.GetConnectionString("DefaultConnection"));
+            services.RegisterRepositories();
+            services.RegisterServices();
             services.RegisterICalService();
             services.RegisterHtmlParserServices();
+
+            services.AddOptions();
+            services.Configure<CalendarServiceOptions>(Configuration.GetSection("CalendarServiceOptions"));
 
             services.AddMvc();
         }
@@ -40,7 +48,7 @@ namespace TomHouben.KULUurroosterfeed
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error");
             }
 
             app.UseStaticFiles();

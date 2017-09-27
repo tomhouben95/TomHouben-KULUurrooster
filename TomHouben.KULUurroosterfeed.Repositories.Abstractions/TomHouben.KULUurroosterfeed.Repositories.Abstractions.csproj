@@ -11,4 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Models\TomHouben.KULUurroosterfeed.Models.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ICoursePickRepository.cs" />
+  </ItemGroup>
 </Project>

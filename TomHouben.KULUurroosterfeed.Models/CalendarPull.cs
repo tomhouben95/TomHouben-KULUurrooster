@@ -8,10 +8,10 @@ namespace TomHouben.KULUurroosterfeed.Models
     {
         public ObjectId Id { get; set; }
 
+        public IEnumerable<string> Courses { get; set; }
+
         public DateTime PullDate { get; set; }
 
-        public string PullUrl { get; set; }
-
-        public List<TimeTableEntry> Entries { get; set; }
+        public IEnumerable<TimeTableEntry> Entries { get; set; }
     }
 }

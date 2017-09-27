@@ -16,6 +16,7 @@ namespace TomHouben.KULUurroosterfeed.ICalService
         public byte[] GenerateICal(IEnumerable<TimeTableEntry> entries)
         {
             var calendar = new Calendar();
+            calendar.AddTimeZone(new VTimeZone("Europe/Brussels"));
 
             foreach(var entry in entries)
             {
