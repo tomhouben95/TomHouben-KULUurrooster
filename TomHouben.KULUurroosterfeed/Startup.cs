@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TomHouben.AspNetCore.MongoDb;
+using TomHouben.KULUurroosterfeed.ICalService;
+using TomHouben.KULUurroosterfeed.HTMLParserServices;
 
 namespace TomHouben.KULUurroosterfeed
 {
@@ -21,6 +24,10 @@ namespace TomHouben.KULUurroosterfeed
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMongoConnection(Configuration.GetConnectionString("DefaultConnection"));
+            services.RegisterICalService();
+            services.RegisterHtmlParserServices();
+
             services.AddMvc();
         }
 

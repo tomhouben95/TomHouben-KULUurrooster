@@ -12,4 +12,17 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TomHouben.AspNetCore.MongoDb\TomHouben.AspNetCore.MongoDb.csproj" />
+    <ProjectReference Include="..\TomHouben.AspNetCore.MongoDb.Abstractions\TomHouben.AspNetCore.MongoDb.Abstractions.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.ICalService\TomHouben.KULUurroosterfeed.ICalService.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Models\TomHouben.KULUurroosterfeed.Models.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.ICalService.Abstractions\TomHouben.KULUurroosterfeed.ICalService.Abstractions.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.HTMLParserServices\TomHouben.KULUurroosterfeed.HTMLParserServices.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.HTMLParserServices.Abstractions\TomHouben.KULUurroosterfeed.HTMLParserServices.Abstractions.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Repositories\TomHouben.KULUurroosterfeed.Repositories.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Repositories.Abstractions\TomHouben.KULUurroosterfeed.Repositories.Abstractions.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Services\TomHouben.KULUurroosterfeed.Services.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Services.Abstractions\TomHouben.KULUurroosterfeed.Services.Abstractions.csproj" />
+  </ItemGroup>
 </Project>

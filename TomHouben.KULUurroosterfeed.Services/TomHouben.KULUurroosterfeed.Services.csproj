@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Services.Abstractions\TomHouben.KULUurroosterfeed.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Models\TomHouben.KULUurroosterfeed.Models.csproj" />
+    <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Repositories.Abstractions\TomHouben.KULUurroosterfeed.Repositories.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
