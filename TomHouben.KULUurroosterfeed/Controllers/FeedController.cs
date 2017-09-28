@@ -59,7 +59,7 @@ namespace TomHouben.KULUurroosterfeed.Controllers
 
             var ical = await _calendarService.GetICalAsync(selectedArray);
 
-            return File(ical, "text/calendar", "uurrooster");
+            return File(ical, "text/calendar", "uurrooster.ics");
         }
 
         [HttpGet("error")]

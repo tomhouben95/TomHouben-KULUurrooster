@@ -17,15 +17,15 @@ namespace TomHouben.KULUurroosterfeed.ICalService
         {
             var calendar = new Calendar();
 
-            //const string timeZone = "Europe/Brussels";
+            const string timeZone = "\"Europe/Brussels\"";
 
             foreach(var entry in entries)
             {
                 calendar.Events.Add(new CalendarEvent{
                     Summary = entry.Title,
                     Location = entry.Room,
-                    Start = new CalDateTime(entry.Start),
-                    End = new CalDateTime(entry.End)
+                    Start = new CalDateTime(entry.Start, timeZone),
+                    End = new CalDateTime(entry.End, timeZone)
                 });
             }
 
