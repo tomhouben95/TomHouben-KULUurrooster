@@ -59,7 +59,7 @@ namespace TomHouben.KULUurroosterfeed.Controllers
 
             var ical = await _calendarService.GetICalAsync(selectedArray);
 
-            return File(ical, "text/calendar");
+            return File(ical, "text/calendar", "uurrooster");
         }
 
         [HttpGet("error")]
@@ -70,25 +70,16 @@ namespace TomHouben.KULUurroosterfeed.Controllers
 
         private string BitArrayToString(BitArray array)
         {
-            var result = new StringBuilder(array.Length);
+            var byteArray = new byte[(array.Length / 8) + 1];
+            array.CopyTo(byteArray, 0);
 
-            for (int i = 0; i < array.Length; i ++)
-            {
-              result.Append(array[i] ? "1": "0");
-            }
-            return result.ToString();
+            return Convert.ToBase64String(byteArray);
         }
 
 		private BitArray StringToBitArray(string array)
 		{
-			var result = new BitArray(array.Length);
-
-			for (int i = 0; i < array.Length; i++)
-			{
-				if (array[i] == '1') result[i] = true;
-			}
-
-			return result;
+            var byteArray = Convert.FromBase64String(array);
+            return new BitArray(byteArray);
 		}
     }
 }

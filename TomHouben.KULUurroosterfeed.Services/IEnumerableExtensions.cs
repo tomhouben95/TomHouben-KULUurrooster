@@ -22,11 +22,11 @@ namespace TomHouben.KULUurroosterfeed.Services
         {
 			var coursesArray = courses.ToArray();
 
-			if (bitArray.Length != coursesArray.Length) throw new Exception();
+			if (bitArray.Length < coursesArray.Length) throw new Exception();
 
 			var selectedCourses = new List<string>();
 
-            for (var i = 0; i < bitArray.Length; i++)
+            for (var i = 0; i < coursesArray.Length; i++)
             {
                 if (bitArray[i]) selectedCourses.Add(coursesArray[i]);
             }

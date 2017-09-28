@@ -14,7 +14,7 @@ namespace TomHouben.KULUurroosterfeed.HTMLParserServices.Helpers
             var trimmedText = text.TrimEnd(':');
             var textParts = trimmedText.Split(' ');
 
-            return DateTime.ParseExact(textParts[1], FormatConstants.DateFormat, CultureInfo.InvariantCulture);
+            return DateTime.ParseExact(textParts[1], FormatConstants.DateFormat, CultureInfo.CurrentCulture);
         }
 
         public static IEnumerable<TimeTableEntry> ParseTable(HtmlNode tableNode, DateTime date)
@@ -56,8 +56,8 @@ namespace TomHouben.KULUurroosterfeed.HTMLParserServices.Helpers
         private static Tuple<DateTime, DateTime> ParseHours(string text, DateTime date)
         {
             var splitText = text.Split(new string[] { "&#8212;" }, StringSplitOptions.RemoveEmptyEntries);
-            var start = TimeSpan.Parse(splitText[0]);
-            var end = TimeSpan.Parse(splitText[1]);
+            var start = TimeSpan.Parse(splitText[0], CultureInfo.CurrentCulture);
+            var end = TimeSpan.Parse(splitText[1], CultureInfo.CurrentCulture);
 
             return new Tuple<DateTime, DateTime>(date + start, date + end);
         }
