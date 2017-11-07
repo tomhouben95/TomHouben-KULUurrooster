@@ -14,7 +14,8 @@ namespace TomHouben.KULUurroosterfeed.HTMLParserServices.Helpers
             var trimmedText = text.TrimEnd(':');
             var textParts = trimmedText.Split(' ');
 
-            return DateTime.ParseExact(textParts[1], FormatConstants.DateFormat, CultureInfo.CurrentCulture);
+            return DateTime.ParseExact(textParts[1], FormatConstants.DateFormat,
+                CultureInfo.CreateSpecificCulture("nl-be"), DateTimeStyles.AdjustToUniversal).ToUniversalTime();
         }
 
         public static IEnumerable<TimeTableEntry> ParseTable(HtmlNode tableNode, DateTime date)
