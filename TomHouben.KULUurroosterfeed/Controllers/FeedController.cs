@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TomHouben.KULUurroosterfeed.HTMLParserServices.Abstractions;
 using TomHouben.KULUurroosterfeed.ICalService.Abstractions;
@@ -16,14 +17,17 @@ namespace TomHouben.KULUurroosterfeed.Controllers
     public class FeedController: Controller
     {
         private readonly ICalendarService _calendarService;
+        private readonly UserManager<TimeTableUser> _userManager;
 
         public FeedController(
-            ICalendarService calendarService)
+            ICalendarService calendarService,
+            UserManager<TimeTableUser> userManager)
         {
             _calendarService = calendarService;
+            _userManager = userManager;
         }
 
-        [HttpGet("")]
+        [HttpGet("courses")]
         public async Task<IActionResult> SelectCourses()
         {
             var courses = await _calendarService.GetCoursesAsync();
@@ -38,7 +42,7 @@ namespace TomHouben.KULUurroosterfeed.Controllers
             return View("SelectCourses", model);
         }
 
-        [HttpPost("")]
+        [HttpPost("courses")]
         public IActionResult SelectCourses([FromForm] SelectCoursesViewModel model)
         {
             if (!ModelState.IsValid) return View("SelectCourses", model);
@@ -52,12 +56,17 @@ namespace TomHouben.KULUurroosterfeed.Controllers
             return View("SelectCourses", model);
         }
 
-        [HttpGet("calendar/{selection}")]
-        public async Task<IActionResult> GetFeed(string selection)
+        [HttpGet("calendar/{userId}")]
+        public async Task<IActionResult> GetFeed(string userId)
         {
-            var selectedArray = StringToBitArray(selection);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            var ical = await _calendarService.GetICalAsync(selectedArray);
+            if (user == null)
+                return NotFound();
+
+            var selectedCourses = user.SelectedCourses;
+
+            var ical = await _calendarService.GetICalAsync(selectedCourses);
 
             return File(ical, "text/calendar", "uurrooster.ics");
         }

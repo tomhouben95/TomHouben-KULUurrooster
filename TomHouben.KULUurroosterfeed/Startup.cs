@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TomHouben.AspNetCore.MongoDb;
 using TomHouben.KULUurroosterfeed.ICalService;
 using TomHouben.KULUurroosterfeed.HTMLParserServices;
+using TomHouben.KULUurroosterfeed.Models;
 using TomHouben.KULUurroosterfeed.Repositories;
 using TomHouben.KULUurroosterfeed.Services;
 using TomHouben.KULUurroosterfeed.Services.Abstractions;
@@ -33,6 +36,20 @@ namespace TomHouben.KULUurroosterfeed
             services.RegisterICalService();
             services.RegisterHtmlParserServices();
 
+            services.AddIdentityWithMongoStoresUsingCustomTypes<TimeTableUser, TimeTableRole>(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                })
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                });
+
             services.AddOptions();
             services.Configure<CalendarServiceOptions>(Configuration.GetSection("CalendarServiceOptions"));
 
@@ -52,6 +69,8 @@ namespace TomHouben.KULUurroosterfeed
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

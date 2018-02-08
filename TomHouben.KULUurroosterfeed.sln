@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomHouben.KULUurroosterfeed", "TomHouben.KULUurroosterfeed\TomHouben.KULUurroosterfeed.csproj", "{A62A4D24-5C26-49B8-8A62-BA8D9E1F169A}"
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomHouben.KULUurroosterfeed.Services", "TomHouben.KULUurroosterfeed.Services\TomHouben.KULUurroosterfeed.Services.csproj", "{14301354-173A-4DB0-BA68-6E2ECFC0811F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomHouben.KULUurroosterfeed.Services.Abstractions", "TomHouben.KULUurroosterfeed.Services.Abstractions\TomHouben.KULUurroosterfeed.Services.Abstractions.csproj", "{1285F454-F6EC-4958-818B-B96E7A7C5DD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNetCore.Identity.MongoDB", "Microsoft.AspNetCore.Identity.MongoDB\Microsoft.AspNetCore.Identity.MongoDB.csproj", "{6E96F009-A46D-450B-8B1B-6F8272EE8201}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,5 +81,9 @@ Global
 		{1285F454-F6EC-4958-818B-B96E7A7C5DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1285F454-F6EC-4958-818B-B96E7A7C5DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1285F454-F6EC-4958-818B-B96E7A7C5DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E96F009-A46D-450B-8B1B-6F8272EE8201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E96F009-A46D-450B-8B1B-6F8272EE8201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E96F009-A46D-450B-8B1B-6F8272EE8201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E96F009-A46D-450B-8B1B-6F8272EE8201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
