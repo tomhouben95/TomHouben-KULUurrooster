@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TomHouben.KULUurroosterfeed.HTMLParserServices.Abstractions;
@@ -14,6 +15,7 @@ using TomHouben.KULUurroosterfeed.Services.Abstractions;
 
 namespace TomHouben.KULUurroosterfeed.Controllers
 {
+    [Route("feed")]
     public class FeedController: Controller
     {
         private readonly ICalendarService _calendarService;
@@ -28,41 +30,55 @@ namespace TomHouben.KULUurroosterfeed.Controllers
         }
 
         [HttpGet("courses")]
+        [Authorize]
         public async Task<IActionResult> SelectCourses()
         {
-            var courses = await _calendarService.GetCoursesAsync();
-            var coursesArray = courses.ToArray();
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+                throw new NotImplementedException();//TODO: Error page
+
+            var allCourses = await _calendarService.GetCoursesAsync();
+            var selectedCourses = user.SelectedCourses;
+
+            var courseSelections = allCourses.Select(x => new CourseSelection(x, selectedCourses.Contains(x))).ToList();
 
             var model = new SelectCoursesViewModel
             {
-                Courses = coursesArray,
-                SelectedCourses = new bool[coursesArray.Length]
+                SelectedCourses = courseSelections
             };
 
             return View("SelectCourses", model);
         }
 
         [HttpPost("courses")]
-        public IActionResult SelectCourses([FromForm] SelectCoursesViewModel model)
+        [Authorize]
+        public async Task<IActionResult> SelectCourses([FromForm] SelectCoursesViewModel model)
         {
             if (!ModelState.IsValid) return View("SelectCourses", model);
+            
+            var user = await _userManager.GetUserAsync(User);
 
-            var selectionString = BitArrayToString(new BitArray(model.SelectedCourses));
+            if (user == null)
+                return Error();
 
-            var url = Url.Action("GetFeed", "Feed", new { selection = selectionString }, HttpContext.Request.Scheme);
+            var selectedCourses = model.SelectedCourses.Where(x => x.Selected).Select(x => x.Name).ToList();
 
-            model.GeneratedLink = url;
+            user.SelectedCourses = selectedCourses;
 
+            await _userManager.UpdateAsync(user);
+            
             return View("SelectCourses", model);
         }
 
-        [HttpGet("calendar/{userId}")]
+        [HttpGet("{userId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetFeed(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
-                return NotFound();
+                return Error();
 
             var selectedCourses = user.SelectedCourses;
 
@@ -75,20 +91,6 @@ namespace TomHouben.KULUurroosterfeed.Controllers
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-
-        private string BitArrayToString(BitArray array)
-        {
-            var byteArray = new byte[(array.Length / 8) + 1];
-            array.CopyTo(byteArray, 0);
-
-            return Convert.ToBase64String(byteArray);
-        }
-
-		private BitArray StringToBitArray(string array)
-		{
-            var byteArray = Convert.FromBase64String(array);
-            return new BitArray(byteArray);
 		}
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
@@ -36,7 +37,17 @@ namespace TomHouben.KULUurroosterfeed
             services.RegisterICalService();
             services.RegisterHtmlParserServices();
 
-            services.AddIdentityWithMongoStoresUsingCustomTypes<TimeTableUser, TimeTableRole>(Configuration.GetConnectionString("DefaultConnection"));
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.LoginPath = "/account/login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
+                options.LogoutPath = "/account/logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
+                options.AccessDeniedPath = "/account/access-denied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+            });
+            
+            services.AddIdentityWithMongoStoresUsingCustomTypes<TimeTableUser, TimeTableRole>(
+                    Configuration.GetConnectionString("DefaultConnection"))
+                .AddDefaultTokenProviders();
 
             services.AddAuthentication()
                 .AddFacebook(facebookOptions =>

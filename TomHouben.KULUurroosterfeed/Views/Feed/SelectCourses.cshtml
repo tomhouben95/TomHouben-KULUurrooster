@@ -7,27 +7,21 @@
 <h2>@ViewData["Title"]</h2>
 <hr/>
 
-@if(@Model.GeneratedLink != null){
-<div class="alert alert-success">
-  <strong>Link: </strong> <a href="@Model.GeneratedLink">@Model.GeneratedLink</a>
-</div>
-}
-
 <div class="row">
     <div class="col-md-8">
         <form asp-controller="Feed" asp-action="SelectCourses" method="post" class="form-horizontal" role="form">
             <h4>Cursussen</h4>
             <hr />
             
-            @for (var i = 0; i < Model.Courses.Length; i++)
+            @for(var i = 0; i < Model.SelectedCourses.Count; i++)
             {
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="checkbox">
                             <label>
-                                <input asp-for="@Model.SelectedCourses[i]"/>
-							    <input type="hidden" asp-for="@Model.Courses[i]"/> 
-                                @Model.Courses[i]
+                                <input asp-for="@Model.SelectedCourses[i].Selected"/>
+                                <input type="hidden" asp-for="@Model.SelectedCourses[i].Name"/>
+                                @Model.SelectedCourses[i].Name
                             </label>
                         </div>
                     </div>
@@ -36,7 +30,7 @@
                 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-default">Genereer link</button>
+                    <button type="submit" class="btn btn-default">Sla op</button>
                 </div>
             </div>
         </form>

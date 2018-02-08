@@ -11,6 +11,7 @@ namespace TomHouben.KULUurroosterfeed.Models
         {
             Email = email;
             UserName = email;
+            SelectedCourses = new List<string>();
         }
 
         public List<string> SelectedCourses { get; set; }

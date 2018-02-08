@@ -26,10 +26,19 @@ namespace TomHouben.KULUurroosterfeed.Controllers
             _userManager = userManager;
 
         }
-
+        
+        [HttpGet("login")]
         public IActionResult Login()
         {
             return NotFound();
+        }
+
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Login");
         }
 
         [HttpGet("facebook-login")]
@@ -89,11 +98,35 @@ namespace TomHouben.KULUurroosterfeed.Controllers
                 if (!addLoginResult.Succeeded)
                     return RedirectToAction("Error");
                 _logger.LogInformation("User created in with {Name} provider.", info.LoginProvider);
+                
+                await _signInManager.ExternalLoginSignInAsync(
+                        info.LoginProvider, 
+                        info.ProviderKey,
+                        isPersistent: false);
             }
+           
+            
+            
 
             return RedirectToAction("SelectCourses", "Feed");
         }
 
+        [HttpPost("remove-account")]
+        [Authorize]
+        public async Task<IActionResult> RemoveAccount()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+                return RedirectToAction("Error");
+
+            await _userManager.DeleteAsync(user);
+
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Login");
+        }
+        
         [HttpGet("error")]
         [AllowAnonymous]
         public IActionResult Error()

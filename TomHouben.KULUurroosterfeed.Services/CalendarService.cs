@@ -35,16 +35,14 @@ namespace TomHouben.KULUurroosterfeed.Services
 
         public async Task<IEnumerable<string>> GetCoursesAsync()
         {
-            var storedPull = await _calendarPullRepository.GetQueryable().FirstOrDefaultAsync();
-
-            if (storedPull == null) storedPull = await PullCalendarData();
+            var storedPull = await _calendarPullRepository.GetQueryable().FirstOrDefaultAsync() ?? await PullCalendarData();
 
             if (!IsStillValid(storedPull.PullDate)) storedPull = await PullCalendarData(storedPull);
 
             return storedPull.Courses;
         }
 
-        public async Task<byte[]> GetICalAsync(BitArray courseSelection)
+        public async Task<byte[]> GetICalAsync(IEnumerable<string> courses)
         {
             var storedPull = await _calendarPullRepository.GetQueryable().FirstOrDefaultAsync();
 
@@ -52,7 +50,7 @@ namespace TomHouben.KULUurroosterfeed.Services
 
             if (!IsStillValid(storedPull.PullDate)) storedPull = await PullCalendarData(storedPull);
 
-            var selectedTimeEntries = storedPull.Entries.SelectTimeTableEntries(courseSelection, storedPull.Courses);
+            var selectedTimeEntries = storedPull.Entries.SelectTimeTableEntries(courses);
 
             return _icalService.GenerateICal(selectedTimeEntries);
         }
@@ -66,29 +64,21 @@ namespace TomHouben.KULUurroosterfeed.Services
                            () =>
                            entries.AddRange(_effectiveTimeTableParser.Parse(_options.SecondSemesterUrl)));
 
-            CalendarPull result;
 
-            if (previousPull == null)
+            var result = new CalendarPull
             {
-                result = new CalendarPull
-                {
-                    Entries = entries,
-                    PullDate = DateTime.Now,
-                    Courses = entries.Select(x => x.Title).Distinct().OrderBy(x => x)
-                };
-            } else {
-                result = previousPull;
-                result.PullDate = DateTime.Now;
-                result.Entries = entries;
-            }
+                Entries = entries,
+                PullDate = DateTime.Now,
+                Courses = entries.Select(x => x.Title).Distinct().OrderBy(x => x)
+            };
+
+            if (previousPull != null)
+                result.Id = previousPull.Id;
+
 
             await _calendarPullRepository.UpsertAsync(result);
             return result;
         }
-
-
-
-
 
         private bool IsStillValid(DateTime lastPull)
         {

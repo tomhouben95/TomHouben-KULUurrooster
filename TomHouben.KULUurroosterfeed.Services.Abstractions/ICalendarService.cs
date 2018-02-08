@@ -9,6 +9,6 @@ namespace TomHouben.KULUurroosterfeed.Services.Abstractions
     {
         Task<IEnumerable<string>> GetCoursesAsync();
 
-        Task<byte[]> GetICalAsync(BitArray courseSelection);
+        Task<byte[]> GetICalAsync(IEnumerable<string> courseSelection);
     }
 }
