@@ -1,11 +1,5 @@
 ﻿@model UserViewModel
 
-<style>
-    .user-container {
-        padding-top: 50px;
-    }
-</style>
-
 <div class="container-fluid user-container">
     <div class="col-md-6 col-md-offset-3">
         <section>
@@ -20,11 +14,12 @@
                 </div>
             </div>
         </section>
+        <hr class="hr-text"/>
         <section>
             <h3>Selected Courses</h3>
-                <p>
-                    You have <b>@Model.SelectedCourses.Count</b> selected course(s).
-                </p>
+            <p>
+                You have <b>@Model.SelectedCourses.Count</b> selected course(s).
+            </p>
             <div class="row">
                 <ul>
                
@@ -38,13 +33,14 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-block">Edit</a>
+                    <a href="@Url.Action("SelectCourses", "User")" class="btn btn-default btn-block">Edit</a>
                 </div>
             </div>
         </section>
+        <hr class="hr-text"/>
         <section>
             <h3>
-                Remove account
+                Account
             </h3>
             <div class="col-md-6 col-md-offset-3">
                     <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-block">Logout</a>

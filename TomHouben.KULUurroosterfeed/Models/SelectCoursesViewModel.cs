@@ -9,7 +9,7 @@ namespace TomHouben.KULUurroosterfeed.Models
     {
 
         [Required]
-        public List<CourseSelection> SelectedCourses { get; set; } = new List<CourseSelection>();
+        public List<CourseSelectionViewModel> SelectedCourses { get; set; } = new List<CourseSelectionViewModel>();
 
     }
 }

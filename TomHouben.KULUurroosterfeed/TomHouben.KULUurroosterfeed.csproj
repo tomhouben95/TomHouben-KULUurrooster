@@ -23,10 +23,6 @@
     <ProjectReference Include="..\TomHouben.KULUurroosterfeed.Services.Abstractions\TomHouben.KULUurroosterfeed.Services.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Feed\" />
-    <Folder Include="Views\Home" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
   </ItemGroup>
   <ItemGroup>

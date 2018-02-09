@@ -20,7 +20,7 @@ namespace TomHouben.KULUurroosterfeed.ICalService
             foreach(var entry in entries)
             {
                 calendar.Events.Add(new CalendarEvent{
-                    Summary = entry.Title,
+                    Summary = entry.Course,
                     Location = entry.Room,
                     Start = new CalDateTime(entry.Start),
                     End = new CalDateTime(entry.End)

@@ -1,14 +1,14 @@
 ﻿namespace TomHouben.KULUurroosterfeed.Models
 {
-    public class CourseSelection
+    public class CourseSelectionViewModel
     {
-        public CourseSelection(string name, bool selected)
+        public CourseSelectionViewModel(string name, bool selected)
         {
             Name = name;
             Selected = selected;
         }
         
-        public CourseSelection(){}
+        public CourseSelectionViewModel(){}
         
         public string Name { get; set;}
         

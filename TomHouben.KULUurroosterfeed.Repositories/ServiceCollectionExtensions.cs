@@ -8,7 +8,7 @@ namespace TomHouben.KULUurroosterfeed.Repositories
     {
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
-            services.AddScoped<ICalendarPullRepository, CalendarPullRepository>();
+            services.AddScoped<ITimeTableEntryRepository, TimeTableEntryRepository>();
 
             return services;
         }

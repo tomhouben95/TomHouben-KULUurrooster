@@ -10,7 +10,7 @@ namespace TomHouben.KULUurroosterfeed.Services
     {
         public static IEnumerable<TimeTableEntry> SelectTimeTableEntries(this IEnumerable<TimeTableEntry> source, IEnumerable<string> selectedCourses)
         {
-            var result = source.Where(x => selectedCourses.Contains(x.Title));
+            var result = source.Where(x => selectedCourses.Contains(x.Course));
             return result;
 
         }

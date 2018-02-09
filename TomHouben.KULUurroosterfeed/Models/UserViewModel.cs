@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TomHouben.KULUurroosterfeed.Models
 {
@@ -11,6 +12,7 @@ namespace TomHouben.KULUurroosterfeed.Models
         }
         
         public string FeedUrl { get; }
+ 
         
         public List<string> SelectedCourses { get; }
     }
