@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace TomHouben.KULUurroosterfeed.Services.Abstractions
 {
-    public interface ICalendarService
+    public interface ITimeTableEntryService
     {
         Task<IEnumerable<string>> GetCoursesAsync();
 
-        Task<byte[]> GetICalAsync(BitArray courseSelection);
+        Task<byte[]> GetICalAsync(IEnumerable<string> courseSelection);
     }
 }

@@ -46,7 +46,7 @@ namespace TomHouben.KULUurroosterfeed.HTMLParserServices.Helpers
                 node = node.NextSibling;
 
                 node = node.NextSibling;
-                timeTableEntry.Title = ParseTitle(node);
+                timeTableEntry.Course = ParseTitle(node);
 
                 result.Add(timeTableEntry);
             }

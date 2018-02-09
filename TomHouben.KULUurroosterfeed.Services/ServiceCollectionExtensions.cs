@@ -8,7 +8,7 @@ namespace TomHouben.KULUurroosterfeed.Services
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<ICalendarService, CalendarService>();
+            services.AddScoped<ITimeTableEntryService, TimeTableEntryService>();
 
             return services;
         }

@@ -1,9 +1,16 @@
 ﻿using System;
+using MongoDB.Bson;
+
 namespace TomHouben.KULUurroosterfeed.Models
 {
     public class TimeTableEntry
     {
-        public string Title { get; set; }
+
+        public ObjectId Id { get; set; }
+
+        public DateTime CreatedAt => Id.CreationTime;
+        
+        public string Course { get; set; }
 
         public DateTime Start { get; set; }
 

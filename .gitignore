@@ -309,6 +309,7 @@ __pycache__/
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
+
 .idea/**/uiDesigner.xml
 
 # Gradle:
@@ -500,5 +501,7 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/csharp,visualstudio,jetbrains+all,visualstudiocode
 
-appsettings.json
-appsettings.Development.json
+*/appsettings.json
+*/appsettings.Development.json
+
+*/wwwroot/lib/*
