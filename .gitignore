@@ -309,6 +309,7 @@ __pycache__/
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
+
 .idea/**/uiDesigner.xml
 
 # Gradle:
@@ -502,3 +503,5 @@ fabric.properties
 
 */appsettings.json
 */appsettings.Development.json
+
+*/wwwroot/lib/*

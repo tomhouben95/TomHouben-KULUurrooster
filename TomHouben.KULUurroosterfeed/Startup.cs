@@ -21,9 +21,12 @@ namespace TomHouben.KULUurroosterfeed
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+        
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -36,6 +39,14 @@ namespace TomHouben.KULUurroosterfeed
             services.RegisterServices();
             services.RegisterICalService();
             services.RegisterHtmlParserServices();
+
+            if (!_env.IsDevelopment())
+            {
+                services.Configure<MvcOptions>(options =>
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());
+                });
+            }
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -77,6 +88,14 @@ namespace TomHouben.KULUurroosterfeed
             else
             {
                 app.UseExceptionHandler("/error");
+            }
+
+            if (!env.IsDevelopment())
+            {
+                var options = new RewriteOptions()
+                    .AddRedirectToHttps();
+
+                app.UseRewriter(options);
             }
 
             app.UseStaticFiles();

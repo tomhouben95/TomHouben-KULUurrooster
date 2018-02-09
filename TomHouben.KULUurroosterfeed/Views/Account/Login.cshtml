@@ -1,6 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
 <div class="container-fluid login-container">
     <div class="col-md-4 col-md-offset-4">
         <div class="row">
@@ -11,6 +9,48 @@
         </div>
         <div class="row">
             <a class="btn btn-danger btn-block" href="@Url.Action("GoogleLogin", "Account")">Login with Google</a>
+        </div>
+        <div class="row">
+            <hr class="hr-text">
+        </div>
+        <div>
+            <p><b>What does the "KULeuven Effective Timetable" do?</b></p>
+            <p>
+                This service allows you to subscribe to a calendar feed that contains the effective timetable 
+                of the "Master Computer Science" at the KULeuven.
+                This tool is not meant to replace <a href="https://cw.quivr.be/">Quivr for CW</a>.
+                With this tool, you can sync the effective timetable in your own calendar, 
+                but it is recommended to verfify your exact schedule using "Quivr".
+            </p>
+            <p><b>How does it work?</b></p>
+            <p>
+                Every 6 hours the effective timetable is parsed and cached. 
+                When you login, you can select the courses you take.
+                The personalized feed will only display the courses you have selected.
+            </p>
+            <p><b>How do I create an account?</b></p>
+            <p>
+                You can create an account by logging in using Facebook or Google.
+                If no account exists for the email address provided by Facebook or Google, an account will be created.
+            </p>
+            <p><b>Can I remove my account?</b></p>
+            <p>
+                When you are logged in, you can remove your account by using the "Remove Account" button.
+                Once your account is removed, it is impossible to recover it.
+            </p>
+            <p><b>Why do I have to login with Facebook or Google?</b></p>
+            <p>
+                We use Facebook or Google to create a personal account.
+                This makes it a lot easier to add or remove courses from your personal feed.
+                We only request your email address from Facebook or Google.
+                This email address is used to identify your account.
+            </p>
+            <p><b>More about this project:</b></p>
+            <p>
+                This project is a released under the <a href="https://github.com/tomhouben95/TomHouben-KULUurrooster/blob/master/LICENSE">MIT license</a>.
+                Its source can be found <a href="https://github.com/tomhouben95/TomHouben-KULUurrooster">here</a>.
+                If you would like to contact me, you can always mail me at <a href="mailto:hello@tomhouben.com">hello@tomhouben.com</a>.
+            </p>
         </div>
     </div>
 </div>

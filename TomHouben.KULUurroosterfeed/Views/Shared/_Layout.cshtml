@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KULeuven Effective Schedule</title>
+    <title>KULeuven Effective Timetable</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -16,18 +17,19 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     </environment>
 </head>
 <body>
 <div class="fixed-top text-center">
-    <h1>KU Leuven Effective Schedule</h1>
+    <h1>KULeuven Effective Timetable</h1>
     <hr class="hr-text"/>
 </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer class="text-center">
-            <p>&copy; 2018 - TomHouben</p>
+            <p class="love">Made with <i class="icon ion-heart"></i> by <a href="https://github.com/tomhouben95">Tom Houben</a> under <a href="https://github.com/tomhouben95/TomHouben-KULUurrooster/blob/master/LICENSE">MIT license</a></p>
         </footer>
     </div>
 

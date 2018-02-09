@@ -21,7 +21,7 @@ namespace TomHouben.KULUurroosterfeed.Repositories
         
         public Task<List<string>> GetAllCoursesAsync()
         {
-            return _collection.AsQueryable().Select(x => x.Course).Distinct().ToListAsync();
+            return _collection.AsQueryable().Select(x => x.Course).Distinct().OrderBy(x => x).ToListAsync();
         }
 
         public async Task<DateTime?> GetCreatedDateAsync()
