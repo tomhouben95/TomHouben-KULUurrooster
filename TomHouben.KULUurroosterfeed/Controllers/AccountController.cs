@@ -26,19 +26,19 @@ namespace TomHouben.KULUurroosterfeed.Controllers
             _userManager = userManager;
 
         }
-        
+
         [HttpGet("login")]
         public IActionResult Login()
         {
-            return NotFound();
+            return View("Login");
         }
-
+         
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet("facebook-login")]
@@ -72,7 +72,7 @@ namespace TomHouben.KULUurroosterfeed.Controllers
             var info = await _signInManager.GetExternalLoginInfoAsync();
 
             if (info == null)
-                return RedirectToAction("Login");
+                return RedirectToAction("Index", "Home");
 
             var result =
                 await _signInManager.ExternalLoginSignInAsync(
@@ -83,55 +83,69 @@ namespace TomHouben.KULUurroosterfeed.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
+                return RedirectToAction("Index", "User");
             }
-            else
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
             {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                var newUser = new TimeTableUser(email);
-                var createUserResult = await _userManager.CreateAsync(newUser);
+                user = new TimeTableUser(email);
+
+                var createUserResult = await _userManager.CreateAsync(user);
 
                 if (!createUserResult.Succeeded)
-                    return RedirectToAction("Error");
+                {
+                    _logger.LogError("Error creating new user: {Email}", email);
+                    return RedirectToAction("Error", "Home");
+                }
 
-                var addLoginResult = await _userManager.AddLoginAsync(newUser, info);
-
-                if (!addLoginResult.Succeeded)
-                    return RedirectToAction("Error");
-                _logger.LogInformation("User created in with {Name} provider.", info.LoginProvider);
-                
-                await _signInManager.ExternalLoginSignInAsync(
-                        info.LoginProvider, 
-                        info.ProviderKey,
-                        isPersistent: false);
+                _logger.LogInformation("Created new user: {Email}", email);
             }
-           
-            
-            
+               
+            var addLoginResult = await _userManager.AddLoginAsync(user, info);
 
-            return RedirectToAction("SelectCourses", "Feed");
+            if (!addLoginResult.Succeeded)
+            {
+                _logger.LogError("Error adding login with {Name} provider", info.LoginProvider);
+                return RedirectToAction("Error", "Home");
+            }
+            
+            await _signInManager.ExternalLoginSignInAsync(
+                info.LoginProvider, 
+                info.ProviderKey,
+                isPersistent: false);
+
+            _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
+
+            return RedirectToAction("Index", "User");
         }
+        
 
-        [HttpPost("remove-account")]
+        [HttpGet("remove-account")]
         [Authorize]
         public async Task<IActionResult> RemoveAccount()
         {
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
-                return RedirectToAction("Error");
-
+            {
+                _logger.LogError("Tried to remove non-existing user");
+                return RedirectToAction("Error", "Home");
+            }
             await _userManager.DeleteAsync(user);
 
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
         }
-        
-        [HttpGet("error")]
+
+        [HttpGet("access-denied")]
         [AllowAnonymous]
-        public IActionResult Error()
+        public IActionResult AccessDenied()
         {
-            return NotFound();
+            return View("Error");
         }
     }
 }
