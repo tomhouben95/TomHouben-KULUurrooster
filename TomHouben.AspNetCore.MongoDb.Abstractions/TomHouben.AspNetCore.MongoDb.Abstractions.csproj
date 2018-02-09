@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Driver, Version=2.4.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\.nuget\packages\mongodb.driver\2.4.4\lib\netstandard1.5\MongoDB.Driver.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

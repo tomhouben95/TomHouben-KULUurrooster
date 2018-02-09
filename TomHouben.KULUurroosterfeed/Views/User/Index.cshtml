@@ -1,0 +1,80 @@
+﻿@model UserViewModel
+
+<div class="container-fluid user-container">
+    <div class="col-md-6 col-md-offset-3">
+        <section>
+            <h3>Personal URL</h3>
+            <p>In your calendar, subscribe to the following url:</p>
+            <div class="input-group">
+                <input id="calendar-url" class="form-control" value="@Model.FeedUrl" readonly>
+                <div class="input-group-btn">
+                    <button class="btn btn-default btn-clip" data-clipboard-target="#calendar-url">
+                        <i class="glyphicon glyphicon-duplicate"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <hr class="hr-text"/>
+        <section>
+            <h3>Selected Courses</h3>
+            <p>
+                You have <b>@Model.SelectedCourses.Count</b> selected course(s).
+            </p>
+            <div class="row">
+                <ul>
+               
+                    @foreach (var course in Model.SelectedCourses)
+                    {
+                        <li>
+                            @course
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <a href="@Url.Action("SelectCourses", "User")" class="btn btn-default btn-block">Edit</a>
+                </div>
+            </div>
+        </section>
+        <hr class="hr-text"/>
+        <section>
+            <h3>
+                Account
+            </h3>
+            <div class="col-md-6 col-md-offset-3">
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-block">Logout</a>
+                    <a href="#" class="btn btn-danger btn-block" data-href="@Url.Action("RemoveAccount", "Account")" data-toggle="modal" data-target="#confirm-delete">Remove account</a>
+            </div>
+           
+        </section>
+    </div>
+</div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Remove account
+            </div>
+            <div class="modal-body">
+                Are you sure you want to remove your account?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Remove</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var clipboard = new Clipboard('.btn-clip');
+        
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
+}
+
